@@ -23,6 +23,37 @@ const checkNodeStatusFailure = node => {
   };
 };
 
+export function checkNodeBlocks(nodeUrl) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: types.SET_LOADING_NODE_BLOCKS,
+        nodeUrl
+      });
+      const res = await fetch(`${nodeUrl}/api/v1/blocks`);
+
+      if(res.status >= 400) {
+        dispatch({
+          type: types.SET_ERROR_NODE_BLOCKS,
+          nodeUrl
+        });
+      }
+
+      const json = await res.json();
+      dispatch({
+        type: types.SET_NODE_BLOCKS,
+        nodeUrl,
+        res: json,
+      });
+    } catch (err) {
+      dispatch({
+        type: types.SET_ERROR_NODE_BLOCKS,
+        nodeUrl
+      });
+    }
+  };
+}
+
 export function checkNodeStatus(node) {
   return async (dispatch) => {
     try {

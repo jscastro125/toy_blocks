@@ -24,23 +24,30 @@ export class Nodes extends React.Component {
       expandedNodeURL:
         node.url === this.state.expandedNodeURL ? null : node.url,
     });
+    this.props.actions.checkNodeBlocks(node.url);
   }
 
   render() {
-    const { nodes } = this.props;
+    const { nodes, blocksByNode } = this.props;
+
     return (
       <Box paddingTop={7}>
         <Typography variant="h4" component="h1">
           <strong style={{ color: "#000" }}>Nodes</strong>
         </Typography>
-        {nodes.list.map((node) => (
-          <Node
-            node={node}
-            key={node.url}
-            expanded={node.url === this.state.expandedNodeURL}
-            toggleNodeExpanded={this.toggleNodeExpanded}
-          />
-        ))}
+        {nodes.list.map((node) => {
+          return (
+            <Node
+              blocksError={blocksByNode[node.url].error}
+              blocksLoading={blocksByNode[node.url].loading}
+              blocks={blocksByNode[node.url].blocks}
+              node={node}
+              key={node.url}
+              expanded={node.url === this.state.expandedNodeURL}
+              toggleNodeExpanded={this.toggleNodeExpanded}
+            />
+          )
+        })}
       </Box>
     );
   }
@@ -54,6 +61,7 @@ Nodes.propTypes = {
 function mapStateToProps(state) {
   return {
     nodes: state.nodes,
+    blocksByNode: state.blocksByNode
   };
 }
 

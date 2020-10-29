@@ -26,5 +26,27 @@ export default () => ({
         loading: false
       }
     ]
+  },
+  blocksByNode: {
+    'https://thawing-springs-53971.herokuapp.com': {
+      error: false,
+      loading: false,
+      blocks: []
+    },
+    'https://secret-lowlands-62331.herokuapp.com': {
+      error: false,
+      loading: false,
+      blocks: []
+    },
+    'https://calm-anchorage-82141.herokuapp.com': {
+      error: false,
+      loading: false,
+      blocks: []
+    },
+   'http://localhost:3002': {
+      error: false,
+      loading: false,
+      blocks: []
+    },
   }
 });
